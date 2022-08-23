@@ -27,27 +27,25 @@ export default class HorseGame{
     setBackCards(){//PUT THE STARTER CARDS IN PLACE
         this.cells.forEach(cards => {
             const [col,row] = this.coords(cards)
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < 8; i++) {
+                //SET THE HORSES IN DOM
+                if(col == i+1 && row == 0){
+                    let img = document.createElement('img')
+                    img.src = `https://deckofcardsapi.com/static/img/${this.horseStart[i]}.png`
+                    cards.appendChild(img)
+                }
                 //SET THE BACK CARDS
-                if( col == 0 && row == i) {
+                if(col == 0 && row == i+1) {
                     //DIV
                     let div = document.createElement('div')
+                    div.classList.add('flipper')
                     cards.appendChild(div)
-
                     //BACK
                     let img = document.createElement('img')
                     img.src = this.cardBack
                     img.classList.add("frontCard")
-                    cards.classList.add("backCard")
+                    cards.classList.add("theCard")
                     div.appendChild(img)
-
-                    
-                }
-                //SET THE HORSES IN DOM
-                if( col == i+1 && row == 0 ){
-                    let img = document.createElement('img')
-                    img.src = `https://deckofcardsapi.com/static/img/${this.horseStart[i]}.png`
-                    cards.appendChild(img)
                 }
             }
         })
