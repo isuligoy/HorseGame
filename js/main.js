@@ -5,7 +5,6 @@ export default class StartGame extends HorseGame{
     constructor(){
         super()
         this.deck_id = ''
-        this.pullCard = ''
     }
     //GET NEW DECK OF CARDS SHUFFLED
     async getDeckCards(){
@@ -36,26 +35,20 @@ export default class StartGame extends HorseGame{
                 newCards.push(value)
             }
         }
-        let div = document.querySelectorAll('.centerCard>div')
-        console.log(div)
         //PUT CARDS IN DOM
+        let div = document.querySelectorAll('.centerCard>div')
+        let i = 0
         setTimeout(()=>{        
-            this.cells.forEach(cards => {
-                const [col,row] = this.coords(cards)
-
-            
-            for (let i = 1; i < 9 ; i++) {
-                if( col == 0 && row == i ) {
-                    //dom
+            div.forEach(cards => {
                     let img = document.createElement('img')
-                    img.src = `${newCards[i-1].image}`
+                    img.src = `${newCards[i].image}`
                     img.classList.add("backCard")
                     cards.appendChild(img)
+                    i++
                 }
-            }
-        })},500)
-
+        )},500)
     }
+
 }
 
 

@@ -37,12 +37,30 @@ div > div {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 /* FLIP */
-.backCard {
-  border-radius: 20px;
+.flipper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
 }
-.usando {
-  background-color: red;
+.frontCard {
+  position: absolute;
+
+  backface-visibility: hidden;
+}
+.backCard {
+  position: absolute;
+
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+.flipper:hover {
+  transform: rotateY(180deg);
 }
