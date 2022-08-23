@@ -2,7 +2,6 @@ export default class HorseGame{
     constructor(){
         this.horseStart = ["JD","JC","JH","JS"]
         this.cardBack = "../img/backCard.jpg"
-        
     }
 
     setBoardGame(){
@@ -36,17 +35,29 @@ export default class HorseGame{
                 }
                 //SET THE BACK CARDS
                 if(col == 0 && row == i+1) {
-                    //DIV
+                    //DIV-CONTAINER-FLIPPER
                     let div = document.createElement('div')
                     div.classList.add('flipper')
                     cards.appendChild(div)
-                    //BACK
+                    //FRON&DIV-CONTAINTER-THECARD
                     let img = document.createElement('img')
                     img.src = this.cardBack
-                    img.classList.add("frontCard")
                     cards.classList.add("theCard")
+                    img.classList.add("frontCard")//FRONT-IMG
                     div.appendChild(img)
                 }
+            }
+            //SET BACK-CARD-0,0
+            if(col == 0 && row == 0){
+                let img = document.createElement('img')
+                img.src = this.cardBack
+                cards.appendChild(img)
+            }
+            //SET BUTTON
+            if(col == 0 && row == 9){
+                let btn = document.createElement('button')
+                btn.innerText = 'Start Game'
+                cards.appendChild(btn)
             }
         })
     }
@@ -62,6 +73,3 @@ export default class HorseGame{
         return [col,row]
     }
 }
-
-
-
