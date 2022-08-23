@@ -1,59 +1,26 @@
+import SetCardGame from "./setCardGame.js"
 import HorseGame from "./setGame.js"
+import { deck } from "./setCardGame.js"
 
-// START THE GAME
-export default class StartGame extends HorseGame{
+export default class PlayGame extends SetCardGame{
     constructor(){
         super()
-        this.deck_id = ''
     }
-    //GET NEW DECK OF CARDS SHUFFLED
-    async getDeckCards(){
-        try{
-            const info = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
-            const data = await info.json()
-            this.deck_id = data.deck_id
-            this.getCards(8)
-        }catch(err){
-            throw new (err)
-        }
+    showTheCardDeck(){
+        this.getCards().then(x => console.log(x.cards[0].code))
+        // console.log(cardRequest)
     }
 
-    async getCards(num=1){
-        const card = await fetch(`https://www.deckofcardsapi.com/api/deck/${this.deck_id}/draw/?count=${num}`)
-        let pullCard = await card.json()
-        if(num == 8)  this.setGateCards(pullCard.cards)
-        return pullCard
+    oneStepBack(){
+        let stepBack = 0
+        let selectDiv = document.querySelectorAll('.theCard')
+        console.log(selectDiv)
     }
 
-    setGateCards(cardImg){
-        let newCards = []
-        for (let value of cardImg) {
-            if(this.horseStart.includes(value.code)){
-                cardImg.slice(cardImg[0].code,1)
-                this.getCards().then((x)=>newCards.push(x.cards[0]))
-            }else{
-                newCards.push(value)
-            }
-        }
-        //PUT CARDS IN DOM
-        let div = document.querySelectorAll('.centerCard>div')
-        let i = 0
-        setTimeout(()=>{        
-            div.forEach(cards => {
-                    let img = document.createElement('img')
-                    img.src = `${newCards[i].image}`
-                    img.classList.add("backCard")
-                    cards.appendChild(img)
-                    i++
-                }
-        )},500)
+    destre(){
+        console.log(deck)
     }
-
 }
-
-
-
-
 
 
 
@@ -61,10 +28,20 @@ export default class StartGame extends HorseGame{
 // CREATE GAME AND START DE BOARD
 const board = new HorseGame()
 // START THE GAME
-const prePlay = new StartGame()
-
+const prePlay = new SetCardGame()
+// START GAME
+const startGame = new PlayGame()
 
 //SET BOARD
 board.setBoardGame()
 // BUTTOM TO START DE GAME
 prePlay.getDeckCards()
+
+
+//GAME
+let btn = document.querySelector('button')
+btn.addEventListener('click', () => startGame.showTheCardDeck())
+
+// -----------TESTING-----------
+// START GAME
+startGame.oneStepBack()
