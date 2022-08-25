@@ -2,6 +2,7 @@ export default class HorseGame{
     constructor(){
         this.horseStart = ["JD","JC","JH","JS"]
         this.cardBack = "../img/backCard.jpg"
+        this.moves = ["DIAMONDS","SPADES","HEARTS","CLUBS"]
     }
 
     setBoardGame(){
@@ -29,9 +30,11 @@ export default class HorseGame{
             for (let i = 0; i < 8; i++) {
                 //SET THE HORSES IN DOM
                 if(col == i+1 && row == 0){
-                    let img = document.createElement('img')
-                    img.src = `https://deckofcardsapi.com/static/img/${this.horseStart[i]}.png`
-                    cards.appendChild(img)
+                    let img = document.createElement('img');
+                    img.src = `https://deckofcardsapi.com/static/img/${this.horseStart[i]}.png`;
+                    img.classList.add(this.moves[i]);
+                    cards.classList.toggle(`${this.moves[i]}`);
+                    cards.appendChild(img);
                 }
                 //SET THE BACK CARDS
                 if(col == 0 && row == i+1) {
