@@ -1,5 +1,6 @@
 import HorseGame from "./setGame.js"
-export let deck
+let deck
+
 // START THE GAME
 export default class SetCardGame extends HorseGame{
     constructor(){
@@ -9,7 +10,7 @@ export default class SetCardGame extends HorseGame{
     //GET NEW DECK OF CARDS SHUFFLED
     async getDeckCards(){
         try{
-            const info = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
+            const info = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=3")
             const data = await info.json()
             deck = data.deck_id
             this.getCards(8)
@@ -26,6 +27,7 @@ export default class SetCardGame extends HorseGame{
     }
 
     setGateCards(cardImg){
+        //LOOK IF YOU HAVE 2 OF THE SAME
         let newCards = []
         for (let value of cardImg) {
             if(this.horseStart.includes(value.code)){
@@ -35,6 +37,7 @@ export default class SetCardGame extends HorseGame{
                 newCards.push(value)
             }
         }
+
         //PUT CARDS IN DOM - BACKCARD
         let div = document.querySelectorAll('.centerCard>div')
         let i = 0
@@ -46,7 +49,7 @@ export default class SetCardGame extends HorseGame{
                     cards.appendChild(img)
                     i++
                 }
-        )},500)
+        )},700)
     }
 }
 

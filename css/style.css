@@ -61,7 +61,7 @@ div > div {
   backface-visibility: hidden;
   transform: rotateY(180deg);
 }
-.flipper:hover {
+.flipper/*hover*/ {
   /*BE A EVENTE*/
   transform: rotateY(180deg);
 }
@@ -69,4 +69,8 @@ div > div {
 /*ZOOM*/
 .centerCard {
   /* transform: scale(4); */
+}
+
+div.DIAMONDS {
+  background: blue;
 }
