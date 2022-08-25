@@ -5,67 +5,74 @@ import HorseGame from "./setGame.js"
 export default class PlayGame extends SetCardGame{
     constructor(){
         super()
-        this.win = false
+        this.win = true
+    }
+
+    //CHEEK IF WIN
+    winnerOrStop(){
+        while(this.win){
+            this.showTheCardDeck()
+        }
     }
 
     showTheCardDeck(){
-        const horses = [...document.querySelectorAll('.centerCard>img[class]')];
-        // const int = document.querySelector('.DIAMONDS>img');
-        // const classRem = document.querySelector('.DIAMONDS')
-        // classRem.classList.toggle("DIAMONDS");
-        // const body = document.querySelector('.SPADES')
-        // body.appendChild(int);
-        // console.log(int)
-        // console.log(body)
-
         this.getCards().then((res) => {
-            const pres = res.cards[0].suit;
-            const code = res.cards[0].code;
-            this.horseStart.forEach(x=>{
-                if(x == code) {
-                    this.showTheCardDeck()
+            const code = res.cards;
+            for (let value of code) {
+                if(this.horseStart.includes(value.code)) {
+                    this.showTheCardDeck();
+                    break;
                 } 
-            })
-            this.PullCard(res,code)
-            console.log(code)// BORRAR
-            
-            // horses.forEach(horses => {
-            //     if (horses.className === pres){
-            //         // this.moveHorse
-            //         console.log(horses.className);//BORRAR
-            //     }
-            // });
+                this.pullCard(res.cards[0]);
+            }
         });
     };
 
-    PullCard(res, code){
-        const cardImg = res.cards[0].image;
+    pullCard(res){
+        const cardImg = res.image;
         this.cells.forEach(cards => {
-            const [col,row] = this.coords(cards)
+            const [col,row] = this.coords(cards);
             if( col == "0" && row == "0"){
                     const img = document.querySelector('div>img')
                     img.src = cardImg 
-                }
-            }) 
-            
+                };
+            });
+        //WHEN PULL MOVE HORES
+        setTimeout(() => {
+            this.moveHorse(res)
+        }, 2000);
         };
 
-        moveHorse(){
-        
+        moveHorse(res){
+            const cardMark = [document.querySelector(`.${res.suit}`)];
+            // cardMark.classList.toggle(`${res.suit}`);
+            
+            //MOVE THE HORSE
+            const horses = [...document.querySelectorAll('.centerCard>img[class]')];
+
+
+            cardMark.forEach(cards => {
+                // const [col,row] = this.coords(cards);
+                // if( cardMark ){
+                //     col == "0" && row == "0"
+                // };
+            });
+
+            for (const card of cardMark) {
+                const col = card.getAttribute('col');
+                const row = card.getAttribute('row');
+                console.log(row)
+
+                
+
+                // card.appendChild(newMove)
+            };
         }
     
         oneStepBack(){
             let stepBack = 0
             let selectDiv = document.querySelectorAll('.theCard')
         }
-    
-        // canNotBe(){
-        //     console.log("Similar")
-        //         this.getCards().then((res) => {
-        //             return res.cards[0].image
-        //         }
-        //     );
-        // }
     }
 
 
@@ -89,5 +96,8 @@ prePlay.getDeckCards()
 //GAME
 let btn = document.querySelector('button')
 btn.addEventListener('click', () => startGame.showTheCardDeck())
+
+
+
 // -----------TESTING-----------
 // START GAME

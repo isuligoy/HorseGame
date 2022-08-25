@@ -10,7 +10,7 @@ export default class SetCardGame extends HorseGame{
     //GET NEW DECK OF CARDS SHUFFLED
     async getDeckCards(){
         try{
-            const info = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=3")
+            const info = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
             const data = await info.json()
             deck = data.deck_id
             this.getCards(8)
