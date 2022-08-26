@@ -5,7 +5,6 @@ import HorseGame from "./setGame.js"
 export default class PlayGame extends SetCardGame{
     constructor(){
         super()
-        this.win = true
     }
 
     //CHEEK IF WIN
@@ -32,48 +31,38 @@ export default class PlayGame extends SetCardGame{
         const cardImg = res.image;
         this.cells.forEach(cards => {
             const [col,row] = this.coords(cards);
-            if( col == "0" && row == "0"){
-                    const img = document.querySelector('div>img')
-                    img.src = cardImg 
+            if(col == "0" && row == "0"){
+                    const img = document.querySelector('div>img');
+                    img.src = cardImg;
                 };
             });
         //WHEN PULL MOVE HORES
         setTimeout(() => {
-            this.moveHorse(res)
-        }, 2000);
-        };
+            this.moveHorse(res);
+        }, 0);
+    };
 
-        moveHorse(res){
-            const cardMark = [document.querySelector(`.${res.suit}`)];
-            // cardMark.classList.toggle(`${res.suit}`);
-            
-            //MOVE THE HORSE
-            const horses = [...document.querySelectorAll('.centerCard>img[class]')];
+    moveHorse(res){
+        const cardMark = document.querySelector(`.${res.suit}`);
+        let [cardCol,cardRow] = this.coords(cardMark);
+        cardMark.classList.toggle(`${res.suit}`);
+        
+        //MOVE THE HORSE
+        this.cells.forEach(cards => {
+            const [col,row] = this.coords(cards)
+            if(col == cardCol && row == cardRow+1) {
+                let selected = cardMark.children[0]
+                cards.appendChild(selected)
+                cards.classList.toggle(`${res.suit}`);
+            } 
+        });
+    };
 
-
-            cardMark.forEach(cards => {
-                // const [col,row] = this.coords(cards);
-                // if( cardMark ){
-                //     col == "0" && row == "0"
-                // };
-            });
-
-            for (const card of cardMark) {
-                const col = card.getAttribute('col');
-                const row = card.getAttribute('row');
-                console.log(row)
-
-                
-
-                // card.appendChild(newMove)
-            };
-        }
-    
-        oneStepBack(){
-            let stepBack = 0
-            let selectDiv = document.querySelectorAll('.theCard')
-        }
-    }
+    oneStepBack(){
+        // let stepBack = 0
+        // let selectDiv = document.querySelectorAll('.theCard')
+    };
+}
 
 
 

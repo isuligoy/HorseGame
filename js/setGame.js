@@ -3,6 +3,8 @@ export default class HorseGame{
         this.horseStart = ["JD","JC","JH","JS"]
         this.cardBack = "../img/backCard.jpg"
         this.moves = ["DIAMONDS","SPADES","HEARTS","CLUBS"]
+        this.win = true
+        this._deck_id = ""
     }
 
     setBoardGame(){
@@ -20,7 +22,6 @@ export default class HorseGame{
         divCard.setAttribute("col",`${i}`)
         divCard.setAttribute("row",`${j}`)
         divCard.classList.add("centerCard")
-        // divCard.className = `r${i} c${j}`
         slowDownHourse.appendChild(divCard)
     }
 
@@ -33,6 +34,7 @@ export default class HorseGame{
                     let img = document.createElement('img');
                     img.src = `https://deckofcardsapi.com/static/img/${this.horseStart[i]}.png`;
                     img.classList.add(this.moves[i]);
+                    img.setAttribute("draggable","false");
                     cards.classList.toggle(`${this.moves[i]}`);
                     cards.appendChild(img);
                 }
@@ -47,6 +49,7 @@ export default class HorseGame{
                     img.src = this.cardBack
                     cards.classList.add("theCard")
                     img.classList.add("frontCard")//FRONT-IMG
+                    img.setAttribute("draggable","false");
                     div.appendChild(img)
                 }
             }
