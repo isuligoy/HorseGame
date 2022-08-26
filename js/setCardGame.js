@@ -25,7 +25,7 @@ export default class SetCardGame extends HorseGame{
         if(num == 8) this.setGateCards(pullCard.cards)
         return pullCard
     }
-
+    
     setGateCards(cardImg){
         //LOOK IF YOU HAVE 2 OF THE SAME
         let newCards = []
@@ -46,10 +46,10 @@ export default class SetCardGame extends HorseGame{
                     let img = document.createElement('img')
                     img.src = `${newCards[i].image}`
                     img.classList.add("backCard")//BACK-IMG
+                    img.setAttribute("draggable","false");
                     cards.appendChild(img)
                     i++
                 }
         )},700)
     }
 }
-

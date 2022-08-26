@@ -14,6 +14,8 @@ body {
 /* IMG */
 img {
   height: 95%;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 /* SET THE BOARD */
 .board {
@@ -22,8 +24,6 @@ img {
   grid-template-rows: repeat(5, 20vh); /*1fr*/
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  /* display: flex;
-  flex-wrap: wrap; */
 }
 
 div > div {
@@ -71,6 +71,10 @@ div > div {
   /* transform: scale(4); */
 }
 
-div.DIAMONDS {
+/**/
+div.DIAMONDS,
+div.SPADES,
+div.HEARTS,
+div.CLUBS {
   background: blue;
 }
