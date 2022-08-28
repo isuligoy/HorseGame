@@ -1,17 +1,21 @@
 import SetCardGame from "./setCardGame.js"
 import HorseGame from "./setGame.js"
-
+import { theCard } from "./setCardGame.js";
 
 export default class PlayGame extends SetCardGame{
     constructor(){
         super()
-    }
-
-    //CHEEK IF WIN
-    winnerOrStop(){
-        while(this.win){
-            this.showTheCardDeck()
-        }
+        this.doesPass = {
+            0 : [],
+            1 : [],
+            2 : [],
+            3 : [],
+            4 : [],
+            5 : [],
+            6 : [],
+            7 : [],
+        };
+        this.whichCardShow = 0
     }
 
     showTheCardDeck(){
@@ -38,29 +42,56 @@ export default class PlayGame extends SetCardGame{
             });
         //WHEN PULL MOVE HORES
         setTimeout(() => {
-            this.moveHorse(res);
-        }, 0);
+            this.moveHorse(res, null, 1);
+            this.checkStepBack(res);
+        }, 0);//set the timer
     };
 
-    moveHorse(res){
+    moveHorse(res, down, up){
         const cardMark = document.querySelector(`.${res.suit}`);
         let [cardCol,cardRow] = this.coords(cardMark);
         cardMark.classList.toggle(`${res.suit}`);
-        
-        //MOVE THE HORSE
+        let ex = down || up
         this.cells.forEach(cards => {
+            //MOVE THE HORSE
             const [col,row] = this.coords(cards)
-            if(col == cardCol && row == cardRow+1) {
-                let selected = cardMark.children[0]
-                cards.appendChild(selected)
-                cards.classList.toggle(`${res.suit}`);
-            } 
-        });
+            if(col == cardCol && row == cardRow+ex) {
+                    let selected = cardMark.children[0]
+                    cards.appendChild(selected)
+                    cards.classList.toggle(`${res.suit}`);
+                } 
+            })
+            console.log(ex)
+            //MOVE BACK HORSE-----------------if(goback !== undefined)
+        };
+
+    checkStepBack(res){
+        let obj = this.doesPass
+        for (const key in obj) {
+            if(!obj[key].includes(res.suit)){
+                obj[key].push(res.suit)
+                if(obj[key].length == 4){
+                    this.flipTheCard();
+                };
+                break;
+            }
+        };
     };
 
-    oneStepBack(){
-        // let stepBack = 0
-        // let selectDiv = document.querySelectorAll('.theCard')
+    flipTheCard(){
+        const flippers = [...document.querySelectorAll('.flipper')];
+        let i = this.whichCardShow
+        //ADD A SET TIME OUT
+        if(flippers[i]){
+            flippers[i].classList.add('showCard')
+            this.whichCardShow++
+            this.oneStepBack(i)
+        }
+    };
+
+    oneStepBack(sel){
+        this.moveHorse(theCard[sel], -1 , null)
+        // MAKE DAT DE BACK CARD POP ARR
     };
 }
 
@@ -82,11 +113,16 @@ board.setBoardGame()
 prePlay.getDeckCards()
 
 
+// -----------TESTING-----------
 //GAME
 let btn = document.querySelector('button')
-btn.addEventListener('click', () => startGame.showTheCardDeck())
+    .addEventListener('click', () => startGame.showTheCardDeck())
+// btn.addEventListener('click', () => startGame.winnerOrStop())
 
-
-
-// -----------TESTING-----------
 // START GAME
+document.addEventListener('keyup', event => {
+    if (event.code === 'Space') {
+        // console.log("first")
+        startGame.showTheCardDeck()
+    }
+})
