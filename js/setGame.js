@@ -4,7 +4,6 @@ export default class HorseGame{
         this.cardBack = "../img/backCard.jpg"
         this.moves = ["DIAMONDS","SPADES","HEARTS","CLUBS"]
         this.win = true
-        this._deck_id = ""
     }
 
     setBoardGame(){
