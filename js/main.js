@@ -14,11 +14,14 @@ export default class PlayGame extends SetCardGame{
             5 : [],
             6 : [],
             7 : [],
+            8 : [],
         };
         this.whichCardShow = 0
         this.num = 0
     }
 
+    // PROMISE WITH STEPS
+    
     showTheCardDeck(){
         this.getCards().then((res) => {
             const code = res.cards;
@@ -56,8 +59,8 @@ export default class PlayGame extends SetCardGame{
             //MOVE THE HORSE
             const [col,row] = this.coords(cards)
             if(col == cardCol && row == cardRow+move) {
-                    let selected = cardMark.children[0]
-                    cards.appendChild(selected)
+                    let selected = cardMark.children[0];
+                    cards.appendChild(selected);
                     cards.classList.toggle(`${res.suit}`);
                 } 
             })
@@ -70,16 +73,13 @@ export default class PlayGame extends SetCardGame{
                 obj[key].push(res.suit);
 
                 if(obj[this.num].length == 4){
-                    console.log("first")
-                    this.num++ 
+                    this.num++;
                     this.flipTheCard();
-                    console.log(this.num)
                 };
                 break;
             }
-            
-        };
-        // console.log(obj)
+        }
+        this.whoWin()
     };
 
     flipTheCard(){
@@ -94,23 +94,34 @@ export default class PlayGame extends SetCardGame{
     };
     
     oneStepBack(sel){
-        this.moveHorse(theCard[sel], -1)
-        this.deletArr(theCard[sel])
+        this.moveHorse(theCard[sel], -1);
+        this.deletArr(theCard[sel]);
     };
 
     deletArr(res){
-        console.log(res.suit)
         let obj = this.doesPass
         for (const key in obj) {
             if(!obj[key].includes(res.suit)){
-                let position = obj[key-1].indexOf(res.suit)
-                obj[key-1].splice( position, 1 )
-                console.log(obj[key])
-                console.log(res.suit, position)
+                let position = obj[key-1].indexOf(res.suit);
+                obj[key-1].splice( position, 1 );
                 break;
             }
-        };
-        console.log(obj)
+        }
+    };
+
+    whoWin(){
+        let obj = this.doesPass[8][0];
+        
+        if(obj != undefined){
+            const cardMark = document.querySelector(`.${obj}`).firstChild.src;
+            document.querySelector('body').innerHTML= `
+            <div class="centerCard">
+                <img src="${cardMark}">
+                <h3>The winner is ${obj}</h3>
+                <button>Play again</button>
+            </div>
+            `
+        }
     };
 }
 
@@ -137,7 +148,6 @@ prePlay.getDeckCards()
 let btn = document.querySelector('button');
 btn.addEventListener('click', () => startGame.showTheCardDeck())
 // btn.addEventListener('click', () => startGame.winnerOrStop())
-btn.addEventListener('click', () => startGame.inteto())
 
 // START GAME
 document.addEventListener('keyup', e => {
@@ -146,8 +156,4 @@ document.addEventListener('keyup', e => {
     }
 })
 
-// const arr = ['HEARTS', 'SPADES', 'DIAMONDS', 'CLUBS']
-// console.log(arr)
-
-// arr.splice(2,1)
-// console.log(arr)
+// in pullCard(res) TIMER - in flipTheCard() TIMER
