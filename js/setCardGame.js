@@ -14,8 +14,6 @@ export default class SetCardGame extends HorseGame{
             const info = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
             const data = await info.json()
             _deck_id = data.deck_id
-            // this._deck_id.push(data.deck_id)
-            // this._deck_id = data.deck_id
             this.getCards(8)
         }catch(err){
             throw new (err)
