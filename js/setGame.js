@@ -2,7 +2,7 @@ export default class HorseGame{
     constructor(){
         this.horseStart = ["JD","JC","JH","JS"]
         this.cardBack = "../img/backCard.jpg"
-        this.moves = ["DIAMONDS","SPADES","HEARTS","CLUBS"]
+        this.moves = ["DIAMONDS","CLUBS","HEARTS","SPADES"]
         this.win = true
     }
 
