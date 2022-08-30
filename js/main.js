@@ -16,6 +16,7 @@ export default class PlayGame extends SetCardGame{
             7 : [],
         };
         this.whichCardShow = 0
+        this.num = 0
     }
 
     showTheCardDeck(){
@@ -42,40 +43,43 @@ export default class PlayGame extends SetCardGame{
             });
         //WHEN PULL MOVE HORES
         setTimeout(() => {
-            this.moveHorse(res, null, 1);
+            this.moveHorse(res, 1);
             this.checkStepBack(res);
         }, 0);//set the timer
     };
 
-    moveHorse(res, down, up){
+    moveHorse(res, move){
         const cardMark = document.querySelector(`.${res.suit}`);
         let [cardCol,cardRow] = this.coords(cardMark);
         cardMark.classList.toggle(`${res.suit}`);
-        let ex = down || up
         this.cells.forEach(cards => {
             //MOVE THE HORSE
             const [col,row] = this.coords(cards)
-            if(col == cardCol && row == cardRow+ex) {
+            if(col == cardCol && row == cardRow+move) {
                     let selected = cardMark.children[0]
                     cards.appendChild(selected)
                     cards.classList.toggle(`${res.suit}`);
                 } 
             })
-            console.log(ex)
-            //MOVE BACK HORSE-----------------if(goback !== undefined)
         };
 
     checkStepBack(res){
         let obj = this.doesPass
         for (const key in obj) {
             if(!obj[key].includes(res.suit)){
-                obj[key].push(res.suit)
-                if(obj[key].length == 4){
+                obj[key].push(res.suit);
+
+                if(obj[this.num].length == 4){
+                    console.log("first")
+                    this.num++ 
                     this.flipTheCard();
+                    console.log(this.num)
                 };
                 break;
             }
+            
         };
+        // console.log(obj)
     };
 
     flipTheCard(){
@@ -84,14 +88,29 @@ export default class PlayGame extends SetCardGame{
         //ADD A SET TIME OUT
         if(flippers[i]){
             flippers[i].classList.add('showCard')
-            this.whichCardShow++
             this.oneStepBack(i)
+            this.whichCardShow++
         }
     };
-
+    
     oneStepBack(sel){
-        this.moveHorse(theCard[sel], -1 , null)
-        // MAKE DAT DE BACK CARD POP ARR
+        this.moveHorse(theCard[sel], -1)
+        this.deletArr(theCard[sel])
+    };
+
+    deletArr(res){
+        console.log(res.suit)
+        let obj = this.doesPass
+        for (const key in obj) {
+            if(!obj[key].includes(res.suit)){
+                let position = obj[key-1].indexOf(res.suit)
+                obj[key-1].splice( position, 1 )
+                console.log(obj[key])
+                console.log(res.suit, position)
+                break;
+            }
+        };
+        console.log(obj)
     };
 }
 
@@ -115,14 +134,20 @@ prePlay.getDeckCards()
 
 // -----------TESTING-----------
 //GAME
-let btn = document.querySelector('button')
-    .addEventListener('click', () => startGame.showTheCardDeck())
+let btn = document.querySelector('button');
+btn.addEventListener('click', () => startGame.showTheCardDeck())
 // btn.addEventListener('click', () => startGame.winnerOrStop())
+btn.addEventListener('click', () => startGame.inteto())
 
 // START GAME
-document.addEventListener('keyup', event => {
-    if (event.code === 'Space') {
-        // console.log("first")
+document.addEventListener('keyup', e => {
+    if (e.code === 'Space') {
         startGame.showTheCardDeck()
     }
 })
+
+// const arr = ['HEARTS', 'SPADES', 'DIAMONDS', 'CLUBS']
+// console.log(arr)
+
+// arr.splice(2,1)
+// console.log(arr)
