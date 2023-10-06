@@ -30,7 +30,7 @@ img {
 div > div {
   width: 10vw;
   height: 20vh;
-  border: 2px solid red; /*BORRAR*/
+  /* border: 2px solid red; BORRAr */
 }
 
 /* CENTER CARD IN DIVS */
